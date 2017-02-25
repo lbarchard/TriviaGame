@@ -19,17 +19,20 @@ function resetGameTracking() {
 
 
 function playNewGame(){
+    console.log("Enter playNewGame")
     // This function begins the game whether starting for the first time or restarting
     resetGameTracking();
+    console.log(gameTracking);
 
 };
 
 function initializeGame(){
-
+    
 }
 
-$("#Start").on("click", playNewGame);
-$("#Restart").on("click", playNewGame);
+$("#startButton").on("click", playNewGame);
+// $("#Restart").on("click", playNewGame);
+console.log("Loaded")
 
 
 });

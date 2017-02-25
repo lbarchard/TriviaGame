@@ -18,14 +18,18 @@ function resetGameTracking() {
 };
 
 
-function startGame(){
+function playNewGame(){
     // This function begins the game whether starting for the first time or restarting
     resetGameTracking();
 
 };
 
-$("#Start").on("click", startGame);
-$("#Restart").on("click", startGame);
+function initializeGame(){
+
+}
+
+$("#Start").on("click", playNewGame);
+$("#Restart").on("click", playNewGame);
 
 
 });

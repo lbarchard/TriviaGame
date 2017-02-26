@@ -15,7 +15,7 @@ var Question2 = {
 possibleQuestions = [Question1, Question2];
 console.log(possibleQuestions);
 var gameTracking = {}
-
+var askQuestion;
 
 function resetNewGameTracking() {
     gameTracking.timeToAnswerQuestions = 30000;
@@ -34,12 +34,16 @@ function resetNewGameButtonLayout() {
 };
 
 function displayQuestion(questionNumber) {
-    console.log(possibleQuestions[questionNumber].question);
+    $("#question").html(possibleQuestions[questionNumber].question);
+    var shufflePossibleAnswers = []
+    shufflePossibleAnswers.push(possibleQuestions[questionNumber].correctAnswer)
+    $("#answerOne").html(shufflePossibleAnswers[0]);
+    // askQuestion = setTimeout(function() {displayQuestion(i)}, gameTracking.timeToAnswerQuestions);
 }
 
 function runThroughQuestions() {
     for (i=0; i<possibleQuestions.length; i++ ) {
-        setTimeout(displayQuestion(i), gameTracking.timeToAnswerQuestions);
+        displayQuestion(i);
     }
 };
 

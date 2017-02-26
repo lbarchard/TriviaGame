@@ -8,8 +8,7 @@ $(document).ready(function() {
 
 var gameTracking = {}
 
-function resetGameTracking() {
-    gameTracking.timeToAnswerQuestions = 30;
+function resetNewGameTracking() {
     gameTracking.timeToAnswerQuestions = 30;
     gameTracking.timeToWaitBeforeNextQuestion = 10;
     gameTracking.correctAnswerCount = 0;
@@ -17,22 +16,29 @@ function resetGameTracking() {
     gameTracking.unansweredQuestionsCount = 0;
 };
 
-
-function playNewGame(){
-    console.log("Enter playNewGame")
-    // This function begins the game whether starting for the first time or restarting
-    resetGameTracking();
-    console.log(gameTracking);
-
-};
-
-function initializeGame(){
-    
+function resetNewGameButtonLayout() {
+    $("#startButton").hide();
+    $("#answerOne").show();
+    $("#answerTwo").show();
+    $("#answerThree").show();
+    $("#answerFour").show();
 }
 
-$("#startButton").on("click", playNewGame);
-// $("#Restart").on("click", playNewGame);
-console.log("Loaded")
+function playNewGame(){
+    // This function begins the game whether starting for the first time or restarting
+    resetNewGameTracking();
+    resetNewGameButtonLayout();
+};
 
+$("#startButton").on("click", playNewGame);
+
+});
+
+$(document).ready(function() {
+    $("#startButton").show();
+    $("#answerOne").hide();
+    $("#answerTwo").hide();
+    $("#answerThree").hide();
+    $("#answerFour").hide();
 
 });

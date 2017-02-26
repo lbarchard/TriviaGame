@@ -1,10 +1,10 @@
 $(document).ready(function() {
-// var possibleQuestions [{
-//     question: "question 1",
-//     correctAnswer: "correct answer to question 1",
-//     trickAnswers: ["first trick answer to question 1"],
-//     image: "image.png"
-// }]
+var possibleQuestions [{
+    question: "question 1",
+    correctAnswer: "correct answer to question 1",
+    trickAnswers: ["first trick answer to question 1", "answer 2", "Answer 3"],
+    image: "image.png"
+}]
 
 var gameTracking = {}
 
@@ -18,10 +18,10 @@ function resetNewGameTracking() {
 
 function resetNewGameButtonLayout() {
     $("#startButton").hide();
-    $("#answerOne").show();
-    $("#answerTwo").show();
-    $("#answerThree").show();
-    $("#answerFour").show();
+    $("#answerOne").slideDown(500);
+    $("#answerTwo").slideDown(500);
+    $("#answerThree").slideDown(500);
+    $("#answerFour").slideDown(500);
 }
 
 function playNewGame(){
@@ -40,5 +40,6 @@ $(document).ready(function() {
     $("#answerTwo").hide();
     $("#answerThree").hide();
     $("#answerFour").hide();
+    $("#imageHolder").hide();
 
 });

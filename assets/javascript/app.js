@@ -23,28 +23,43 @@ function resetNewGameTracking() {
     gameTracking.correctAnswerCount = 0;
     gameTracking.incorrectAnswerCount = 0;
     gameTracking.unansweredQuestionsCount = 0;
+    gameTracking.currentQuestion = 0;
 };
 
 function resetNewGameButtonLayout() {
     $("#startButton").hide();
-    $("#answerOne").slideDown(500);
-    $("#answerTwo").slideDown(500);
-    $("#answerThree").slideDown(500);
-    $("#answerFour").slideDown(500);
+    $("#answerOne").show();
+    $("#answerTwo").show();
+    $("#answerThree").show();
+    $("#answerFour").show();
 };
 
-function displayQuestion(questionNumber) {
-    $("#question").html(possibleQuestions[questionNumber].question);
-    var shufflePossibleAnswers = []
-    shufflePossibleAnswers.push(possibleQuestions[questionNumber].correctAnswer)
-    $("#answerOne").html(shufflePossibleAnswers[0]);
-    // askQuestion = setTimeout(function() {displayQuestion(i)}, gameTracking.timeToAnswerQuestions);
+function displayQuestion() {
+    $("#question").html(possibleQuestions[gameTracking.currentQuestion].question);
 }
 
-function runThroughQuestions() {
-    for (i=0; i<possibleQuestions.length; i++ ) {
-        displayQuestion(i);
+function displayPossibleAnswers() {
+    var shufflePossibleAnswers = []
+    shufflePossibleAnswers.push(possibleQuestions[gameTracking.currentQuestion].correctAnswer)
+    for (j=0; j<=2; j++) {
+        shufflePossibleAnswers.push(possibleQuestions[gameTracking.currentQuestion].trickAnswers[j]);
     }
+    $("#answerOne").html(shufflePossibleAnswers[0]);
+    $("#answerTwo").html(shufflePossibleAnswers[1]);
+    $("#answerThree").html(shufflePossibleAnswers[2]);
+    $("#answerFour").html(shufflePossibleAnswers[3]);
+
+}
+function runThroughQuestions() {
+        displayQuestion();
+        displayPossibleAnswers();
+        gameTracking.currentQuestion = gameTracking.currentQuestion + 1
+        if (gameTracking.currentQuestion<possibleQuestions.length) {
+                askQuestion = setTimeout(runThroughQuestions, gameTracking.timeToAnswerQuestions);
+        }
+        else {
+            clearInterval(askQuestion);
+        }
 };
 
 function playNewGame(){

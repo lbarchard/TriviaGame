@@ -32,10 +32,15 @@ function resetNewGameButtonLayout() {
     $("#answerFour").slideDown(500);
 }
 
+function runThroughQuestions() {
+
+}
+
 function playNewGame(){
     // This function begins the game whether starting for the first time or restarting
     resetNewGameTracking();
     resetNewGameButtonLayout();
+    runThroughQuestions();
 };
 
 $("#startButton").on("click", playNewGame);

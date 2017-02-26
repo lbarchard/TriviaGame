@@ -16,8 +16,9 @@ possibleQuestions = [Question1, Question2];
 console.log(possibleQuestions);
 var gameTracking = {}
 
+
 function resetNewGameTracking() {
-    gameTracking.timeToAnswerQuestions = 30;
+    gameTracking.timeToAnswerQuestions = 30000;
     gameTracking.timeToWaitBeforeNextQuestion = 10;
     gameTracking.correctAnswerCount = 0;
     gameTracking.incorrectAnswerCount = 0;
@@ -30,11 +31,17 @@ function resetNewGameButtonLayout() {
     $("#answerTwo").slideDown(500);
     $("#answerThree").slideDown(500);
     $("#answerFour").slideDown(500);
+};
+
+function displayQuestion(questionNumber) {
+    console.log(possibleQuestions[questionNumber].question);
 }
 
 function runThroughQuestions() {
-
-}
+    for (i=0; i<possibleQuestions.length; i++ ) {
+        setTimeout(displayQuestion(i), gameTracking.timeToAnswerQuestions);
+    }
+};
 
 function playNewGame(){
     // This function begins the game whether starting for the first time or restarting

@@ -1,10 +1,18 @@
 $(document).ready(function() {
-var possibleQuestions [{
+var possibleQuestions [
+    {
     question: "question 1",
     correctAnswer: "correct answer to question 1",
-    trickAnswers: ["first trick answer to question 1", "answer 2", "Answer 3"],
+    trickAnswers: ["first trick answer to question 1", "Q1 answer 2", "Q1 Answer 3"],
     image: "image.png"
-}]
+    },
+    {
+    question: "question 2",
+    correctAnswer: "correct answer to question 2",
+    trickAnswers: ["first trick answer to question 2", "Q2 answer 2", "Q2 Answer 3"],
+    image: "image.png"
+    }
+]
 
 var gameTracking = {}
 

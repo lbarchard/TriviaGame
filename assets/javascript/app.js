@@ -16,9 +16,11 @@ possibleQuestions = [Question1, Question2];
 console.log(possibleQuestions);
 var gameTracking = {}
 var askQuestion;
+var beginningTimeOfTimer
+
 
 function resetNewGameTracking() {
-    gameTracking.timeToAnswerQuestions = 30000;
+    gameTracking.timeToAnswerQuestions = 10000;
     gameTracking.timeToWaitBeforeNextQuestion = 10;
     gameTracking.correctAnswerCount = 0;
     gameTracking.incorrectAnswerCount = 0;
@@ -48,12 +50,41 @@ function displayPossibleAnswers() {
     $("#answerTwo").html(shufflePossibleAnswers[1]);
     $("#answerThree").html(shufflePossibleAnswers[2]);
     $("#answerFour").html(shufflePossibleAnswers[3]);
+    setTimer();
 
 }
+
+function displayTimer(secondsGoneBy) {
+    $("#timeRemaining").html(secondsGoneBy);
+}
+
+function displayTimeOut() {
+    console.log("You timed out")
+}
+
+function checkIfTimeOut() {
+    var currentTime = (new Date()).getTime();
+    var secondsGoneBy = Math.floor((currentTime - beginningTimeOfTimer)/1000);
+    if (secondsGoneBy < 5 ) {
+        displayTimer(secondsGoneBy);
+        setTimeout(checkIfTimeOut, 1000);
+    }
+    else {
+        displayTimeOut();        
+    }
+}
+
+function setTimer() {
+    beginningTimeOfTimer = (new Date()).getTime();
+    checkIfTimeOut();
+    
+}
+
 function runThroughQuestions() {
         gameTracking.currentQuestion = gameTracking.currentQuestion + 1
         displayQuestion();
         displayPossibleAnswers();
+        
         
         if (gameTracking.currentQuestion<possibleQuestions.length) {
                 askQuestion = setTimeout(runThroughQuestions, gameTracking.timeToAnswerQuestions);
@@ -74,12 +105,12 @@ $("#startButton").on("click", playNewGame);
 
 function rightAnswer() {
     $("#result").html("You got it right");
-    $("#correctAnswer").html("The correct answer was " + possibleQuestions[gameTracking.currentQuestion].correctAnswer);
+    $("#correctAnswer").html("The correct answer was: " + possibleQuestions[gameTracking.currentQuestion].correctAnswer);
 }
 
 function wrongAnswer() {
     $("#result").html("You got it wrong");
-    $("#correctAnswer").html("The correct answer was " + possibleQuestions[gameTracking.currentQuestion].correctAnswer);
+    $("#correctAnswer").html("The correct answer was: " + possibleQuestions[gameTracking.currentQuestion].correctAnswer);
 }
 
 function checkIfRightAnswer(button) {

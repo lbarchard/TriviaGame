@@ -72,29 +72,53 @@ function playNewGame(){
 
 $("#startButton").on("click", playNewGame);
 
-function checkIfRightAnswer() {
+function rightAnswer() {
+    $("#result").html("You got it right");
+    $("#correctAnswer").html("The correct answer was " + possibleQuestions[gameTracking.currentQuestion].correctAnswer);
+}
 
-    if  ($("#answerOne").html()===possibleQuestions[gameTracking.currentQuestion].correctAnswer) {
+function wrongAnswer() {
+    $("#result").html("You got it wrong");
+    $("#correctAnswer").html("The correct answer was " + possibleQuestions[gameTracking.currentQuestion].correctAnswer);
+}
+
+function checkIfRightAnswer(button) {
+    if ($(button).html()===possibleQuestions[gameTracking.currentQuestion].correctAnswer) {
         console.log("Right answer");
+        console.log(askQuestion);
+        rightAnswer();
     }
     else {
         console.log("Wrong answer");
+        console.log(askQuestion);
+        wrongAnswer();
     }
 }
 
-$("#answerOne").on("click", checkIfRightAnswer);
-$("#answerTwo").on("click", checkIfRightAnswer);
-$("#answerThree").on("click", checkIfRightAnswer);
-$("#answerFour").on("click", checkIfRightAnswer);
+$("#answerOne").on("click", (function() {
+    clearInterval(askQuestion);
+    checkIfRightAnswer("#answerOne");
+}));
 
-});
+$("#answerTwo").on("click", (function() {
+    clearInterval(askQuestion);
+    checkIfRightAnswer("#answerTwo");
+}));
 
-$(document).ready(function() {
+$("#answerThree").on("click", (function() {
+    clearInterval(askQuestion);
+    checkIfRightAnswer("#answerThree");
+}));
+
+$("#answerFour").on("click", (function() {
+    clearInterval(askQuestion);
+    checkIfRightAnswer("#answerFour");
+}));
+
     $("#startButton").show();
     $("#answerOne").hide();
     $("#answerTwo").hide();
     $("#answerThree").hide();
     $("#answerFour").hide();
     $("#imageHolder").hide();
-
 });

@@ -23,7 +23,7 @@ function resetNewGameTracking() {
     gameTracking.correctAnswerCount = 0;
     gameTracking.incorrectAnswerCount = 0;
     gameTracking.unansweredQuestionsCount = 0;
-    gameTracking.currentQuestion = 0;
+    gameTracking.currentQuestion = -1;
 };
 
 function resetNewGameButtonLayout() {
@@ -51,9 +51,10 @@ function displayPossibleAnswers() {
 
 }
 function runThroughQuestions() {
+        gameTracking.currentQuestion = gameTracking.currentQuestion + 1
         displayQuestion();
         displayPossibleAnswers();
-        gameTracking.currentQuestion = gameTracking.currentQuestion + 1
+        
         if (gameTracking.currentQuestion<possibleQuestions.length) {
                 askQuestion = setTimeout(runThroughQuestions, gameTracking.timeToAnswerQuestions);
         }
@@ -70,6 +71,21 @@ function playNewGame(){
 };
 
 $("#startButton").on("click", playNewGame);
+
+function checkIfRightAnswer() {
+
+    if  ($("#answerOne").html()===possibleQuestions[gameTracking.currentQuestion].correctAnswer) {
+        console.log("Right answer");
+    }
+    else {
+        console.log("Wrong answer");
+    }
+}
+
+$("#answerOne").on("click", checkIfRightAnswer);
+$("#answerTwo").on("click", checkIfRightAnswer);
+$("#answerThree").on("click", checkIfRightAnswer);
+$("#answerFour").on("click", checkIfRightAnswer);
 
 });
 

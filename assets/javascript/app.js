@@ -10,7 +10,7 @@ var Question2 = {
     question: "question 2",
     correctAnswer: "correct answer to question 2",
     trickAnswers: ["first trick answer to question 2", "Q2 answer 2", "Q2 Answer 3"],
-    image: "image.png"
+    image: "image2.png"
 };
 possibleQuestions = [Question1, Question2];
 console.log(possibleQuestions);
@@ -19,22 +19,9 @@ var askQuestion;
 var beginningTimeOfTimer
 
 
-function resetNewGameTracking() {
-    gameTracking.timeToAnswerQuestions = 10000;
-    gameTracking.timeToWaitBeforeNextQuestion = 10;
-    gameTracking.correctAnswerCount = 0;
-    gameTracking.incorrectAnswerCount = 0;
-    gameTracking.unansweredQuestionsCount = 0;
-    gameTracking.currentQuestion = -1;
-};
 
-function resetNewGameButtonLayout() {
-    $("#startButton").hide();
-    $("#answerOne").show();
-    $("#answerTwo").show();
-    $("#answerThree").show();
-    $("#answerFour").show();
-};
+
+
 
 function displayQuestion() {
     $("#question").html(possibleQuestions[gameTracking.currentQuestion].question);
@@ -58,19 +45,19 @@ function displayTimer(secondsGoneBy) {
     $("#timeRemaining").html(secondsGoneBy);
 }
 
-function displayTimeOut() {
+function displayTimeOutScreen() {
     console.log("You timed out")
 }
 
 function checkIfTimeOut() {
     var currentTime = (new Date()).getTime();
     var secondsGoneBy = Math.floor((currentTime - beginningTimeOfTimer)/1000);
-    if (secondsGoneBy < 5 ) {
+    if (secondsGoneBy < gameTracking.timeToAnswerQuestions ) {
         displayTimer(secondsGoneBy);
         setTimeout(checkIfTimeOut, 1000);
     }
     else {
-        displayTimeOut();        
+        displayTimeOutScreen();        
     }
 }
 
@@ -80,9 +67,44 @@ function setTimer() {
     
 }
 
+
+
+
+
+
+
+
+
+
+function checkIfRightAnswer(button) {
+    if ($(button).html()===possibleQuestions[gameTracking.currentQuestion].correctAnswer) {
+        console.log("Right answer");
+        console.log(askQuestion);
+        displayRightAnswerScreen();
+    }
+    else {
+        console.log("Wrong answer");
+        console.log(askQuestion);
+        displayWrongAnswerScreen();
+    }
+}
+
+function displayWrongAnswerScreen() {
+    $("#result").html("You got it wrong");
+    $("#correctAnswer").html("The correct answer was: " + possibleQuestions[gameTracking.currentQuestion].correctAnswer);
+}
+
+
+function displayRightAnswerScreen() {
+    $("#result").html("You got it right");
+    $("#correctAnswer").html("The correct answer was: " + possibleQuestions[gameTracking.currentQuestion].correctAnswer);
+}
+
+
 function runThroughQuestions() {
-        gameTracking.currentQuestion = gameTracking.currentQuestion + 1
+        
         displayQuestion();
+        gameTracking.currentQuestion = gameTracking.currentQuestion + 1
         displayPossibleAnswers();
         
         
@@ -94,37 +116,44 @@ function runThroughQuestions() {
         }
 };
 
-function playNewGame(){
-    // This function begins the game whether starting for the first time or restarting
-    resetNewGameTracking();
-    resetNewGameButtonLayout();
+
+
+// ---------------------- got to here
+
+
+
+
+
+function displayQuestionScreen() {
+    $(".questionScreen").show();
+    $(".notQuestionScreen").hide();
+};
+
+function nextQuestion(){
+    displayQuestionScreen();
     runThroughQuestions();
 };
 
-$("#startButton").on("click", playNewGame);
-
-function rightAnswer() {
-    $("#result").html("You got it right");
-    $("#correctAnswer").html("The correct answer was: " + possibleQuestions[gameTracking.currentQuestion].correctAnswer);
+function displayStartScreen() {
+    $(".startScreen").show();    
+    $(".notStartScreen").hide();
 }
 
-function wrongAnswer() {
-    $("#result").html("You got it wrong");
-    $("#correctAnswer").html("The correct answer was: " + possibleQuestions[gameTracking.currentQuestion].correctAnswer);
-}
+function initializeNewGame() {
+    gameTracking.timeToAnswerQuestions = 10;
+    gameTracking.timeToWaitBeforeNextQuestion = 10;
+    gameTracking.correctAnswerCount = 0;
+    gameTracking.incorrectAnswerCount = 0;
+    gameTracking.unansweredQuestionsCount = 0;
+    gameTracking.currentQuestion = 0;
+};
 
-function checkIfRightAnswer(button) {
-    if ($(button).html()===possibleQuestions[gameTracking.currentQuestion].correctAnswer) {
-        console.log("Right answer");
-        console.log(askQuestion);
-        rightAnswer();
-    }
-    else {
-        console.log("Wrong answer");
-        console.log(askQuestion);
-        wrongAnswer();
-    }
-}
+initializeNewGame();
+displayStartScreen();
+
+
+
+$("#startButton").on("click", nextQuestion);
 
 $("#answerOne").on("click", (function() {
     clearInterval(askQuestion);
@@ -146,10 +175,4 @@ $("#answerFour").on("click", (function() {
     checkIfRightAnswer("#answerFour");
 }));
 
-    $("#startButton").show();
-    $("#answerOne").hide();
-    $("#answerTwo").hide();
-    $("#answerThree").hide();
-    $("#answerFour").hide();
-    $("#imageHolder").hide();
 });

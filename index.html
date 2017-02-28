@@ -23,18 +23,21 @@
         <div class="row">
             <div class="col-xs-12 col-sm-10 col-md-10 col-lg-8 col-xs-offset-0 col-sm-offset-1 col-md-offset-1 col-lg-offset-2">
                 <div class="jumbotron" id="mainPanel">
-                    <h1 class="text-center" id="title">South African Trivia</h1>
-                    <h2 class="text-center" id="timeRemaining"></h2>
-                    <h2 class="text-center" id="question">Press Start to Begin</h2>
-                    <button class="btn btn-primary btn-lg btn-block" id="startButton" role="button"><h2>Start</h2></button>
-                    <button class="btn btn-primary btn-lg btn-block" id="answerOne" role="button"><h3>Answer1</h3></button>
-                    <button class="btn btn-primary btn-lg btn-block" id="answerTwo" role="button"><h3>Answer2</h3></button>
-                    <button class="btn btn-primary btn-lg btn-block" id="answerThree" role="button"><h3>Answer3</h3></button>
-                    <button class="btn btn-primary btn-lg btn-block" id="answerFour" role="button"><h3>Answer4</h3></button>
-                    <h2 class="text-center" id="result"></h2>
-                    <h2 class="text-center" id="correctAnswer"></h2>
+                    <h1 class="text-center startScreen questionScreen" id="title">South African Trivia</h1>
+                    <h2 class="text-center notStartScreen questionScreen" id="timeRemaining"></h2>
+                    <h2 class="text-center startScreen notQuestionScreen" id="question">Press Start to Begin</h2>
+                    <button class="btn btn-primary btn-lg btn-block startScreen notQuestionScreen" id="startButton" role="button"><h2>Start</h2></button>
+                    <button class="btn btn-primary btn-lg btn-block notStartScreen questionScreen" id="answerOne" role="button"><h3>Answer1</h3></button>
+                    <button class="btn btn-primary btn-lg btn-block notStartScreen questionScreen" id="answerTwo" role="button"><h3>Answer2</h3></button>
+                    <button class="btn btn-primary btn-lg btn-block notStartScreen questionScreen" id="answerThree" role="button"><h3>Answer3</h3></button>
+                    <button class="btn btn-primary btn-lg btn-block notStartScreen questionScreen" id="answerFour" role="button"><h3>Answer4</h3></button>
+                    <h2 class="text-center notStartScreen notQuestionScreen" id="result"></h2>
+                    <h2 class="text-center notStartScreen notQuestionScreen" id="correctAnswer"></h2>
+                    <h2 class="text-center notStartScreen notQuestionScreen" id="correctAnswerCount"></h2>
+                    <h2 class="text-center notStartScreen notQuestionScreen" id="incorrectAnswerCount"></h2>
+                    <h2 class="text-center notStartScreen notQuestionScreen" id="unanswererQuestionCount"></h2>
                     <br>
-                    <img src=".\assets\images\flag.jpg" class="img-responsive" id="imageHolder" alt="Responsive image">      
+                    <img src=".\assets\images\flag.jpg" class="img-responsive notStartScreen notQuestionScreen" id="imageHolder" alt="Responsive image">      
             </div>
 		</div>
     </div>

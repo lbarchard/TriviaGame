@@ -3,25 +3,24 @@ var possibleQuestions = [];
 var Question1 = {
     question: "question 1",
     correctAnswer: "correct answer to question 1",
-    trickAnswers: ["first trick answer to question 1", "Q1 answer 2", "Q1 Answer 3"],
-    image: "image.png"
+    trickAnswer1: "first trick answer to question 1",
+    trickAnswer2: "Q1 answer 2",
+    trickAnswer3: "Q1 Answer 3",
+    image: "q1.png"
 };
 var Question2 = {
     question: "question 2",
     correctAnswer: "correct answer to question 2",
-    trickAnswers: ["first trick answer to question 2", "Q2 answer 2", "Q2 Answer 3"],
-    image: "image2.png"
+    trickAnswer1: "first trick answer to question 2",
+    trickAnswer2: "Q2 answer 2",
+    trickAnswer3: "Q2 Answer 3",
+    image: "q2.png"
 };
 possibleQuestions = [Question1, Question2];
-console.log(possibleQuestions);
 var gameTracking = {}
 var questionTimeout;
 var beginningTimeOfTimer
 var questionTimeout
-
-
-
-
 
 
 function displayQuestion() {
@@ -46,9 +45,7 @@ function displayTimer(secondsGoneBy) {
     $("#timeRemaining").html(secondsGoneBy);
 }
 
-function displayTimeOutScreen() {
-    console.log("You timed out")
-}
+
 
 function checkIfTimeOut() {
     var currentTime = (new Date()).getTime();
@@ -77,17 +74,24 @@ function setTimer() {
 
 
 
-function checkIfRightAnswer(button) {
-    if ($(button).html()===possibleQuestions[gameTracking.currentQuestion].correctAnswer) {
-        console.log("Right answer");
-        console.log(questionTimeout);
-        displayRightAnswerScreen();
-    }
-    else {
-        console.log("Wrong answer");
-        console.log(questionTimeout);
-        displayWrongAnswerScreen();
-    }
+
+
+
+
+
+
+
+
+
+
+//Active area of development
+function displayTimeOutScreen() {
+    console.log("You timed out")
+}
+
+function displayRightAnswerScreen() {
+    $("#result").html("You got it right");
+    $("#correctAnswer").html("The correct answer was: " + possibleQuestions[gameTracking.currentQuestion].correctAnswer);
 }
 
 function displayWrongAnswerScreen() {
@@ -96,23 +100,16 @@ function displayWrongAnswerScreen() {
 }
 
 
-function displayRightAnswerScreen() {
-    $("#result").html("You got it right");
-    $("#correctAnswer").html("The correct answer was: " + possibleQuestions[gameTracking.currentQuestion].correctAnswer);
+function checkIfRightAnswer(button) {
+    if ($(button).html()===possibleQuestions[gameTracking.currentQuestion-1].correctAnswer) {
+        displayRightAnswerScreen();
+    }
+    else {
+        displayWrongAnswerScreen();
+    }
 }
 
-
-
-
-
-
-// ---------------------- got to here
-//anopther comment
-
-
-
-
-
+//Active area of development
 
 function displayQuestionScreen() {
     $(".questionScreen").show();
@@ -121,8 +118,13 @@ function displayQuestionScreen() {
 //clean this up
 function getNextQuestion() {
         
-        if (gameTracking.currentQuestion<=possibleQuestions.length) {
+        if (gameTracking.currentQuestion<possibleQuestions.length) {
                 questionTimeout = setTimeout(displayTimeOutScreen, gameTracking.timeToAnswerQuestions);
+                $("#answerOne").html(possibleQuestions[gameTracking.currentQuestion].correctAnswer);
+                $("#answerTwo").html(possibleQuestions[gameTracking.currentQuestion].trickAnswer1);
+                $("#answerThree").html(possibleQuestions[gameTracking.currentQuestion].trickAnswer2);
+                $("#answerFour").html(possibleQuestions[gameTracking.currentQuestion].trickAnswer3)
+                $("#question").html(possibleQuestions[gameTracking.currentQuestion].question);
                 gameTracking.currentQuestion = gameTracking.currentQuestion + 1
         }
         else {
@@ -142,8 +144,8 @@ function displayStartScreen() {
 }
 
 function initializeNewGame() {
-    gameTracking.timeToAnswerQuestions = 10;
-    gameTracking.timeToWaitBeforeNextQuestion = 10;
+    gameTracking.timeToAnswerQuestions = 10000;
+    gameTracking.timeToWaitBeforeNextQuestion = 10000;
     gameTracking.correctAnswerCount = 0;
     gameTracking.incorrectAnswerCount = 0;
     gameTracking.unansweredQuestionsCount = 0;

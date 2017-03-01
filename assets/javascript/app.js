@@ -15,8 +15,9 @@ var Question2 = {
 possibleQuestions = [Question1, Question2];
 console.log(possibleQuestions);
 var gameTracking = {}
-var askQuestion;
+var questionTimeout;
 var beginningTimeOfTimer
+var questionTimeout
 
 
 
@@ -79,12 +80,12 @@ function setTimer() {
 function checkIfRightAnswer(button) {
     if ($(button).html()===possibleQuestions[gameTracking.currentQuestion].correctAnswer) {
         console.log("Right answer");
-        console.log(askQuestion);
+        console.log(questionTimeout);
         displayRightAnswerScreen();
     }
     else {
         console.log("Wrong answer");
-        console.log(askQuestion);
+        console.log(questionTimeout);
         displayWrongAnswerScreen();
     }
 }
@@ -101,24 +102,13 @@ function displayRightAnswerScreen() {
 }
 
 
-function runThroughQuestions() {
-        
-        displayQuestion();
-        gameTracking.currentQuestion = gameTracking.currentQuestion + 1
-        displayPossibleAnswers();
-        
-        
-        if (gameTracking.currentQuestion<possibleQuestions.length) {
-                askQuestion = setTimeout(runThroughQuestions, gameTracking.timeToAnswerQuestions);
-        }
-        else {
-            clearInterval(askQuestion);
-        }
-};
+
 
 
 
 // ---------------------- got to here
+//anopther comment
+
 
 
 
@@ -128,10 +118,22 @@ function displayQuestionScreen() {
     $(".questionScreen").show();
     $(".notQuestionScreen").hide();
 };
+//clean this up
+function getNextQuestion() {
+        
+        if (gameTracking.currentQuestion<=possibleQuestions.length) {
+                questionTimeout = setTimeout(displayTimeOutScreen, gameTracking.timeToAnswerQuestions);
+                gameTracking.currentQuestion = gameTracking.currentQuestion + 1
+        }
+        else {
+            newGame();
+        }
+};
 
 function nextQuestion(){
+    getNextQuestion();
     displayQuestionScreen();
-    runThroughQuestions();
+
 };
 
 function displayStartScreen() {
@@ -148,30 +150,33 @@ function initializeNewGame() {
     gameTracking.currentQuestion = 0;
 };
 
-initializeNewGame();
-displayStartScreen();
+function newGame() {
+    initializeNewGame();
+    displayStartScreen();
+};
 
+newGame();
 
 
 $("#startButton").on("click", nextQuestion);
 
 $("#answerOne").on("click", (function() {
-    clearInterval(askQuestion);
+    clearInterval(questionTimeout);
     checkIfRightAnswer("#answerOne");
 }));
 
 $("#answerTwo").on("click", (function() {
-    clearInterval(askQuestion);
+    clearInterval(questionTimeout);
     checkIfRightAnswer("#answerTwo");
 }));
 
 $("#answerThree").on("click", (function() {
-    clearInterval(askQuestion);
+    clearInterval(questionTimeout);
     checkIfRightAnswer("#answerThree");
 }));
 
 $("#answerFour").on("click", (function() {
-    clearInterval(askQuestion);
+    clearInterval(questionTimeout);
     checkIfRightAnswer("#answerFour");
 }));
 

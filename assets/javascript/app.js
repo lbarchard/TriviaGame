@@ -26,20 +26,6 @@ function displayQuestion() {
     $("#question").html(possibleQuestions[gameTracking.currentQuestion].question);
 }
 
-function displayPossibleAnswers() {
-    var shufflePossibleAnswers = []
-    shufflePossibleAnswers.push(possibleQuestions[gameTracking.currentQuestion].correctAnswer)
-    for (j=0; j<=2; j++) {
-        shufflePossibleAnswers.push(possibleQuestions[gameTracking.currentQuestion].trickAnswers[j]);
-    }
-    $("#answerOne").html(shufflePossibleAnswers[0]);
-    $("#answerTwo").html(shufflePossibleAnswers[1]);
-    $("#answerThree").html(shufflePossibleAnswers[2]);
-    $("#answerFour").html(shufflePossibleAnswers[3]);
-    setTimer();
-
-}
-
 function displayTimer(secondsGoneBy) {
     $("#timeRemaining").html(secondsGoneBy);
 }
@@ -47,13 +33,8 @@ function displayTimer(secondsGoneBy) {
 function checkIfTimeOut() {
     var currentTime = (new Date()).getTime();
     var secondsGoneBy = Math.floor((currentTime - beginningTimeOfTimer)/1000);
-    if (secondsGoneBy < gameTracking.timeToAnswerQuestions ) {
-        displayTimer(secondsGoneBy);
-        setTimeout(checkIfTimeOut, 1000);
-    }
-    else {
-        displayResultsScreen();        
-    }
+    displayTimer(secondsGoneBy);
+    setTimeout(checkIfTimeOut, 1000);
 }
 
 function setTimer() {
@@ -116,11 +97,12 @@ function displayQuestionScreen() {
     $(".questionScreen").show();
     $(".notQuestionScreen").hide();
     timeout = setTimeout(checkResult, gameTracking.timeToAnswerQuestions);
+    setTimer();
 };
 
 function initializeNewGame() {
-    gameTracking.timeToAnswerQuestions = 2000; 
-    gameTracking.timeToWaitBeforeNextQuestion = 2000;
+    gameTracking.timeToAnswerQuestions = 10000; 
+    gameTracking.timeToWaitBeforeNextQuestion = 5000;
     gameTracking.correctAnswerCount = 0;
     gameTracking.incorrectAnswerCount = 0;
     gameTracking.unansweredQuestionsCount = 0;

@@ -87,7 +87,6 @@ function checkResult(button) {
         gameTracking.unansweredQuestionsCount = gameTracking.unansweredQuestionsCount + 1;
     };
     button = null;
-    console.log(gameTracking);
     displayResultsScreen();
 };
 
@@ -116,7 +115,6 @@ function displayQuestionScreen() {
     $("#answerTwo").html(possibleAnswers[1]);
     $("#answerThree").html(possibleAnswers[2]);
     $("#answerFour").html(possibleAnswers[3]);
-
     $("#question").html(possibleQuestions[gameTracking.currentQuestion].question);
     $(".questionScreen").show();
     $(".notQuestionScreen").hide();
@@ -130,7 +128,6 @@ function randomizeArray(array) {
     var arrayLength = array.length;
     for (i=0; i < arrayLength; i++) {
         questionToGrab = (Math.floor(Math.random()*array.length));
-        // questionToGrab = 0
         randomArray.push(array[questionToGrab]);
         array.splice(questionToGrab, 1);
     }
@@ -163,24 +160,11 @@ displayStartScreen();
 //**************Listening for Button Clicks*********************/
 $("#startButton").on("click", getNextQuestion);
 
-$("#answerOne").on("click", (function() {
+$(".answerButton").on("click", (function() {
     clearInterval(timeout);
-    checkResult("#answerOne");
-}));
-
-$("#answerTwo").on("click", (function() {
-    clearInterval(timeout);
-    checkResult("#answerTwo");
-}));
-
-$("#answerThree").on("click", (function() {
-    clearInterval(timeout);
-    checkResult("#answerThree");
-}));
-
-$("#answerFour").on("click", (function() {
-    clearInterval(timeout);
-    checkResult("#answerFour");
+    var panelId = $(this).attr('id');
+    panelId = "#" + panelId;
+    checkResult(panelId);
 }));
 
 });

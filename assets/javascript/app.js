@@ -49,6 +49,7 @@ var Question6 = {
     image: "assets/images/q6.jpg"
 };
 possibleQuestions = [Question1, Question2, Question3, Question4, Question5, Question6];
+possibleAnswers = [];
 var gameTracking = {}
 var timeout;
 var beginningTimeOfTimer
@@ -60,8 +61,6 @@ function countDown() {
     setTimeout(countDown, 1000);
 }
 
-//Active area of development
-
 function displayResultsScreen() {
     $("#result").html(gameTracking.result);
     $("#correctAnswer").html("The correct answer was: " + possibleQuestions[gameTracking.currentQuestion].correctAnswer);
@@ -72,11 +71,7 @@ function displayResultsScreen() {
     $(".resultsScreen").show();    
     $(".notResultsScreen").hide();
     timeout = setTimeout(getNextQuestion, gameTracking.timeToWaitBeforeNextQuestion);
-
 }
-
-
-
 
 function checkResult(button) {
     if ($(button).html()===possibleQuestions[gameTracking.currentQuestion].correctAnswer) {
@@ -106,11 +101,21 @@ function getNextQuestion() {
         }
 };
 
-function displayQuestionScreen() { 
+function randomizeAnswers() {
+    var possibleAnswer1 = possibleQuestions[gameTracking.currentQuestion].correctAnswer;
+    var possibleAnswer2 = possibleQuestions[gameTracking.currentQuestion].trickAnswer1;
+    var possibleAnswer3 = possibleQuestions[gameTracking.currentQuestion].trickAnswer2;
+    var possibleAnswer4 = possibleQuestions[gameTracking.currentQuestion].trickAnswer3;
+    possibleAnswers = [possibleAnswer1, possibleAnswer2, possibleAnswer3, possibleAnswer4];
+
+}
+
+function displayQuestionScreen() {
+    randomizeAnswers();
     $("#answerOne").html(possibleQuestions[gameTracking.currentQuestion].correctAnswer);
     $("#answerTwo").html(possibleQuestions[gameTracking.currentQuestion].trickAnswer1);
     $("#answerThree").html(possibleQuestions[gameTracking.currentQuestion].trickAnswer2);
-    $("#answerFour").html(possibleQuestions[gameTracking.currentQuestion].trickAnswer3)
+    $("#answerFour").html(possibleQuestions[gameTracking.currentQuestion].trickAnswer3);
     $("#question").html(possibleQuestions[gameTracking.currentQuestion].question);
     $(".questionScreen").show();
     $(".notQuestionScreen").hide();
@@ -119,16 +124,20 @@ function displayQuestionScreen() {
     countDown();
 };
 
-function randomizeQuestions() {
-    var randomQuestions = [];
-    var possibleQuestionsLength = possibleQuestions.length;
-    for (i=0; i < possibleQuestionsLength; i++) {
-        questionToGrab = (Math.floor(Math.random()*possibleQuestions.length));
+function randomizeArray(array) {
+    var randomArray = [];
+    var arrayLength = array.length;
+    for (i=0; i < arrayLength; i++) {
+        questionToGrab = (Math.floor(Math.random()*array.length));
         // questionToGrab = 0
-        randomQuestions.push(possibleQuestions[questionToGrab]);
-        possibleQuestions.splice(questionToGrab, 1);
+        randomArray.push(array[questionToGrab]);
+        array.splice(questionToGrab, 1);
     }
-    possibleQuestions = randomQuestions;
+    return randomArray;
+}
+
+function randomizeQuestions() {
+    possibleQuestions = randomizeArray(possibleQuestions);
 };
 
 function initializeNewGame() {

@@ -18,9 +18,8 @@ var Question2 = {
 };
 possibleQuestions = [Question1, Question2];
 var gameTracking = {}
-var questionTimeout;
+var timeout;
 var beginningTimeOfTimer
-var questionTimeout
 
 
 function displayQuestion() {
@@ -60,41 +59,20 @@ function checkIfTimeOut() {
 function setTimer() {
     beginningTimeOfTimer = (new Date()).getTime();
     checkIfTimeOut();
-    
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //Active area of development
-function displayResultsScreen() {
-    console.log("You timed out")
-}
 
 function displayResultsScreen() {
-    $("result").html(gameTracking.result);
+    $("#result").html(gameTracking.result);
     $("#correctAnswer").html("The correct answer was: " + possibleQuestions[gameTracking.currentQuestion].correctAnswer);
-    $("correctAnswerCount").html("Correct Answers:" + possibleQuestions[gameTracking.correctAnswerCount]);
-    $("incorrectAnswerCount").html("Incorrect Answers:" + possibleQuestions[gameTracking.incorrectAnswerCount]);
-    $("unansweredQuestionsCount").html("Timeout Questions:" + possibleQuestions[gameTracking.unansweredQuestionsCount]);
+    $("#correctAnswerCount").html("Correct Answers:" + gameTracking.correctAnswerCount);
+    $("#incorrectAnswerCount").html("Incorrect Answers:" + gameTracking.incorrectAnswerCount);
+    $("#unansweredQuestionsCount").html("Timeout Questions:" + gameTracking.unansweredQuestionsCount);
     $(".resultsScreen").show();    
     $(".notResultsScreen").hide();
+    timeout = setTimeout(getNextQuestion, gameTracking.timeToWaitBeforeNextQuestion);
 
 }
 
@@ -112,22 +90,24 @@ function checkResult(button) {
     }
     else {
         gameTracking.result = "You timed out!";
+        gameTracking.unansweredQuestionsCount = gameTracking.unansweredQuestionsCount + 1;
     };
-    setTimeout(displayQuestionScreen, gameTracking.timeToWaitBeforeNextQuestion);
+    button = null;
+    console.log(gameTracking);
     displayResultsScreen();
 };
 
 function getNextQuestion() {        
         if (gameTracking.currentQuestion<possibleQuestions.length-1) {
-                                gameTracking.currentQuestion = gameTracking.currentQuestion + 1
+            gameTracking.currentQuestion = gameTracking.currentQuestion + 1;
+            displayQuestionScreen();
         }
         else {
             displayStartScreen();
         }
 };
 
-function displayQuestionScreen() {
-    getNextQuestion()
+function displayQuestionScreen() { 
     $("#answerOne").html(possibleQuestions[gameTracking.currentQuestion].correctAnswer);
     $("#answerTwo").html(possibleQuestions[gameTracking.currentQuestion].trickAnswer1);
     $("#answerThree").html(possibleQuestions[gameTracking.currentQuestion].trickAnswer2);
@@ -135,12 +115,12 @@ function displayQuestionScreen() {
     $("#question").html(possibleQuestions[gameTracking.currentQuestion].question);
     $(".questionScreen").show();
     $(".notQuestionScreen").hide();
-    
+    timeout = setTimeout(checkResult, gameTracking.timeToAnswerQuestions);
 };
 
 function initializeNewGame() {
-    gameTracking.timeToAnswerQuestions = 3000;
-    gameTracking.timeToWaitBeforeNextQuestion = 3000;
+    gameTracking.timeToAnswerQuestions = 2000; 
+    gameTracking.timeToWaitBeforeNextQuestion = 2000;
     gameTracking.correctAnswerCount = 0;
     gameTracking.incorrectAnswerCount = 0;
     gameTracking.unansweredQuestionsCount = 0;
@@ -157,25 +137,25 @@ function displayStartScreen() {
 displayStartScreen();
 
 //**************Listening for Button Clicks*********************/
-$("#startButton").on("click", displayQuestionScreen);
+$("#startButton").on("click", getNextQuestion);
 
 $("#answerOne").on("click", (function() {
-    clearInterval(questionTimeout);
+    clearInterval(timeout);
     checkResult("#answerOne");
 }));
 
 $("#answerTwo").on("click", (function() {
-    clearInterval(questionTimeout);
+    clearInterval(timeout);
     checkResult("#answerTwo");
 }));
 
 $("#answerThree").on("click", (function() {
-    clearInterval(questionTimeout);
+    clearInterval(timeout);
     checkResult("#answerThree");
 }));
 
 $("#answerFour").on("click", (function() {
-    clearInterval(questionTimeout);
+    clearInterval(timeout);
     checkResult("#answerFour");
 }));
 

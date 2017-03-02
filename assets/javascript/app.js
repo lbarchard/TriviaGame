@@ -20,28 +20,13 @@ possibleQuestions = [Question1, Question2];
 var gameTracking = {}
 var timeout;
 var beginningTimeOfTimer
+var currentTime
 
-
-function displayQuestion() {
-    $("#question").html(possibleQuestions[gameTracking.currentQuestion].question);
+function countDown() {
+    currentTime = (new Date()).getTime();
+    $("#timeRemaining").html(Math.ceil((gameTracking.timeToAnswerQuestions + beginningTimeOfTimer - currentTime)/1000));
+    setTimeout(countDown, 1000);
 }
-
-function displayTimer(secondsGoneBy) {
-    $("#timeRemaining").html(secondsGoneBy);
-}
-
-function checkIfTimeOut() {
-    var currentTime = (new Date()).getTime();
-    var secondsGoneBy = Math.floor((currentTime - beginningTimeOfTimer)/1000);
-    displayTimer(secondsGoneBy);
-    setTimeout(checkIfTimeOut, 1000);
-}
-
-function setTimer() {
-    beginningTimeOfTimer = (new Date()).getTime();
-    checkIfTimeOut();
-}
-
 
 //Active area of development
 
@@ -97,12 +82,12 @@ function displayQuestionScreen() {
     $(".questionScreen").show();
     $(".notQuestionScreen").hide();
     timeout = setTimeout(checkResult, gameTracking.timeToAnswerQuestions);
-    setTimer();
+    beginningTimeOfTimer = (new Date()).getTime();
+    countDown();
 };
-
 function initializeNewGame() {
     gameTracking.timeToAnswerQuestions = 10000; 
-    gameTracking.timeToWaitBeforeNextQuestion = 5000;
+    gameTracking.timeToWaitBeforeNextQuestion = 5000    
     gameTracking.correctAnswerCount = 0;
     gameTracking.incorrectAnswerCount = 0;
     gameTracking.unansweredQuestionsCount = 0;

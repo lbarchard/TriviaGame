@@ -118,9 +118,23 @@ function displayQuestionScreen() {
     beginningTimeOfTimer = (new Date()).getTime();
     countDown();
 };
+
+function randomizeQuestions() {
+    var randomQuestions = [];
+    var possibleQuestionsLength = possibleQuestions.length;
+    for (i=0; i < possibleQuestionsLength; i++) {
+        questionToGrab = (Math.floor(Math.random()*possibleQuestions.length));
+        // questionToGrab = 0
+        randomQuestions.push(possibleQuestions[questionToGrab]);
+        possibleQuestions.splice(questionToGrab, 1);
+    }
+    possibleQuestions = randomQuestions;
+};
+
 function initializeNewGame() {
+    randomizeQuestions();
     gameTracking.timeToAnswerQuestions = 10000; 
-    gameTracking.timeToWaitBeforeNextQuestion = 5000    
+    gameTracking.timeToWaitBeforeNextQuestion = 1000    
     gameTracking.correctAnswerCount = 0;
     gameTracking.incorrectAnswerCount = 0;
     gameTracking.unansweredQuestionsCount = 0;

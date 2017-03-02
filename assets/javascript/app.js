@@ -1,22 +1,54 @@
 $(document).ready(function() {
 var possibleQuestions = [];
 var Question1 = {
-    question: "question 1",
-    correctAnswer: "correct answer to question 1",
-    trickAnswer1: "first trick answer to question 1",
-    trickAnswer2: "Q1 answer 2",
-    trickAnswer3: "Q1 Answer 3",
-    image: "q1.png"
+    question: "Iconic mountain found in Cape Town",
+    correctAnswer: "Table Mountain",
+    trickAnswer1: "Stone Mountain",
+    trickAnswer2: "Mount Kilimanjaro",
+    trickAnswer3: "Mount Fuji",
+    image: "assets/images/q1.jpg"
 };
 var Question2 = {
-    question: "question 2",
-    correctAnswer: "correct answer to question 2",
-    trickAnswer1: "first trick answer to question 2",
-    trickAnswer2: "Q2 answer 2",
-    trickAnswer3: "Q2 Answer 3",
-    image: "q2.png"
+    question: "Biggest man made hole in Africa",
+    correctAnswer: "Kimberley Mine",
+    trickAnswer1: "Bat Cave",
+    trickAnswer2: "Death Valley",
+    trickAnswer3: "Bingham Canyon Mine",
+    image: "assets/images/q2.jpg"
 };
-possibleQuestions = [Question1, Question2];
+var Question3 = {
+    question: "Island where Mandela was imprisoned",
+    correctAnswer: "Robbin Island",
+    trickAnswer1: "Alcatraz",
+    trickAnswer2: "Hawaii",
+    trickAnswer3: "Manhattan Island",
+    image: "assets/images/q3.jpg"
+};
+var Question4 = {
+    question: "Name of the national rugby team",
+    correctAnswer: "Springboks",
+    trickAnswer1: "All Blacks",
+    trickAnswer2: "Falcons",
+    trickAnswer3: "The Dutchmen",
+    image: "assets/images/q4.jpg"
+};
+var Question5 = {
+    question: "Salty dried meat snack",
+    correctAnswer: "Biltong",
+    trickAnswer1: "Beef Jerky",
+    trickAnswer2: "Fillet",
+    trickAnswer3: "Gristle",
+    image: "assets/images/q5.jpg"
+};
+var Question6 = {
+    question: "A cookout",
+    correctAnswer: "Braai",
+    trickAnswer1: "Grill",
+    trickAnswer2: "BBQ",
+    trickAnswer3: "Cookie",
+    image: "assets/images/q6.jpg"
+};
+possibleQuestions = [Question1, Question2, Question3, Question4, Question5, Question6];
 var gameTracking = {}
 var timeout;
 var beginningTimeOfTimer
@@ -36,6 +68,7 @@ function displayResultsScreen() {
     $("#correctAnswerCount").html("Correct Answers:" + gameTracking.correctAnswerCount);
     $("#incorrectAnswerCount").html("Incorrect Answers:" + gameTracking.incorrectAnswerCount);
     $("#unansweredQuestionsCount").html("Timeout Questions:" + gameTracking.unansweredQuestionsCount);
+    $("#imageHolder").attr("src",possibleQuestions[gameTracking.currentQuestion].image)
     $(".resultsScreen").show();    
     $(".notResultsScreen").hide();
     timeout = setTimeout(getNextQuestion, gameTracking.timeToWaitBeforeNextQuestion);

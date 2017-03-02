@@ -107,15 +107,16 @@ function randomizeAnswers() {
     var possibleAnswer3 = possibleQuestions[gameTracking.currentQuestion].trickAnswer2;
     var possibleAnswer4 = possibleQuestions[gameTracking.currentQuestion].trickAnswer3;
     possibleAnswers = [possibleAnswer1, possibleAnswer2, possibleAnswer3, possibleAnswer4];
-
+    possibleAnswers = randomizeArray(possibleAnswers);
 }
 
 function displayQuestionScreen() {
     randomizeAnswers();
-    $("#answerOne").html(possibleQuestions[gameTracking.currentQuestion].correctAnswer);
-    $("#answerTwo").html(possibleQuestions[gameTracking.currentQuestion].trickAnswer1);
-    $("#answerThree").html(possibleQuestions[gameTracking.currentQuestion].trickAnswer2);
-    $("#answerFour").html(possibleQuestions[gameTracking.currentQuestion].trickAnswer3);
+    $("#answerOne").html(possibleAnswers[0]);
+    $("#answerTwo").html(possibleAnswers[1]);
+    $("#answerThree").html(possibleAnswers[2]);
+    $("#answerFour").html(possibleAnswers[3]);
+
     $("#question").html(possibleQuestions[gameTracking.currentQuestion].question);
     $(".questionScreen").show();
     $(".notQuestionScreen").hide();

@@ -48,7 +48,17 @@ var Question6 = {
     trickAnswer3: "Cookie",
     image: "assets/images/q6.jpg"
 };
-possibleQuestions = [Question1, Question2, Question3, Question4, Question5, Question6];
+var Question7 = {
+    question: "Nickname for national soccer team",
+    correctAnswer: "Bafana Bafana",
+    trickAnswer1: "Cheetahs",
+    trickAnswer2: "Eagles",
+    trickAnswer3: "Vuvuzelas",
+    image: "assets/images/q7.jpg"
+};
+
+
+possibleQuestions = [Question1, Question2, Question3, Question4, Question5, Question6, Question7];
 possibleAnswers = [];
 var gameTracking = {}
 var timeout;
@@ -149,7 +159,7 @@ function randomizeQuestions() {
 function initializeNewGame() {
     randomizeQuestions();
     gameTracking.timeToAnswerQuestions = 10000; 
-    gameTracking.timeToWaitBeforeNextQuestion = 1000    
+    gameTracking.timeToWaitBeforeNextQuestion = 5000    
     gameTracking.correctAnswerCount = 0;
     gameTracking.incorrectAnswerCount = 0;
     gameTracking.unansweredQuestionsCount = 0;

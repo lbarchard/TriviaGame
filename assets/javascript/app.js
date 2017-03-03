@@ -57,7 +57,7 @@ var currentTime
 
 function countDown() {
     currentTime = (new Date()).getTime();
-    $("#timeRemaining").html(Math.ceil((gameTracking.timeToAnswerQuestions + beginningTimeOfTimer - currentTime)/1000));
+    $("#timeRemaining").html("Time Remaining: " + Math.ceil((gameTracking.timeToAnswerQuestions + beginningTimeOfTimer - currentTime)/1000) + " seconds");
     setTimeout(countDown, 1000);
 }
 
@@ -149,18 +149,18 @@ function initializeNewGame() {
     gameTracking.result = "";
 };
 
-function displayStartScreen() {
+function displayStartScreen() {  
     initializeNewGame();
     $(".startScreen").show();    
     $(".notStartScreen").hide();
 }
 
-displayStartScreen();
+displayStartScreen();  //initial function call to start the entire game
 
 //**************Listening for Button Clicks*********************/
-$("#startButton").on("click", getNextQuestion);
+$("#startButton").on("click", getNextQuestion);  //event that starts each round
 
-$(".answerButton").on("click", (function() {
+$(".answerButton").on("click", (function() {  //event that gets the users answer to the question
     clearInterval(timeout);
     var panelId = $(this).attr('id');
     panelId = "#" + panelId;

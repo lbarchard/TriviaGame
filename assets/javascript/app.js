@@ -107,7 +107,8 @@ function displayRestartScreen() {
     initializeNewGame();
 }
 
-function getNextQuestion() {        
+function getNextQuestion() {
+        $("#imageHolder").attr("src","") //probably a hack but do this to ensure last image is not showing when next answer is show        
         if (gameTracking.currentQuestion<possibleQuestions.length-1) {
             gameTracking.currentQuestion = gameTracking.currentQuestion + 1;
             displayQuestionScreen();

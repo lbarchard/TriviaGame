@@ -64,9 +64,9 @@ function countDown() {
 function displayResultsScreen() {
     $("#result").html(gameTracking.result);
     $("#correctAnswer").html("The correct answer was: " + possibleQuestions[gameTracking.currentQuestion].correctAnswer);
-    $("#correctAnswerCount").html("Correct Answers:" + gameTracking.correctAnswerCount);
-    $("#incorrectAnswerCount").html("Incorrect Answers:" + gameTracking.incorrectAnswerCount);
-    $("#unansweredQuestionsCount").html("Timeout Questions:" + gameTracking.unansweredQuestionsCount);
+    $("#correctAnswerCount").html("Correct Answers: " + gameTracking.correctAnswerCount);
+    $("#incorrectAnswerCount").html("Incorrect Answers: " + gameTracking.incorrectAnswerCount);
+    $("#unansweredQuestionsCount").html("Timeout Questions: " + gameTracking.unansweredQuestionsCount);
     $("#imageHolder").attr("src",possibleQuestions[gameTracking.currentQuestion].image)
     $(".resultsScreen").show();    
     $(".notResultsScreen").hide();
@@ -90,13 +90,21 @@ function checkResult(button) {
     displayResultsScreen();
 };
 
+function displayRestartScreen() {  
+    $("#result").html(gameTracking.result);
+    $(".restartScreen").show();    
+    $(".notRestartScreen").hide();
+    initializeNewGame();
+}
+
 function getNextQuestion() {        
         if (gameTracking.currentQuestion<possibleQuestions.length-1) {
             gameTracking.currentQuestion = gameTracking.currentQuestion + 1;
             displayQuestionScreen();
         }
         else {
-            displayStartScreen();
+            gameTracking.result = "Below are your results"
+            displayRestartScreen();
         }
 };
 
